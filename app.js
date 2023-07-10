@@ -1,13 +1,13 @@
 const dotenv = require('dotenv')
 const express = require('express');
 const mongoose = require('mongoose');
-const path = require('path');
 
 const app = express();
 
-const PORT = process.env.PORT || 5000;
+// require('dotenv').config();
 
 dotenv.config({path: './config.env'});
+const PORT = process.env.PORT;
 
 require('./db/connection');
 
@@ -17,11 +17,6 @@ app.use(require('./router/auth'));
 app.use(express.json());
 
 
-app.use(express.static(path.join(__dirname, './server/client/todolist/build')));
-
-app.get('*', function(req,res){
-  res.sendFile(path.join(__dirname, "./server/client/todolist/build/index.html"))
-}) 
 
 
 

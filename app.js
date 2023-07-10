@@ -1,6 +1,8 @@
 const dotenv = require('dotenv')
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
+
 
 const app = express();
 
@@ -13,6 +15,8 @@ require('./db/connection');
 
 
 //we link the router files to make our route easy
+app.use(cors());
+
 app.use(require('./router/auth'));
 app.use(express.json());
 

@@ -1,8 +1,11 @@
 const dotenv = require('dotenv')
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
 
 const app = express();
+
+const PORT = process.env.PORT || 5000;
 
 dotenv.config({path: './config.env'});
 
@@ -13,7 +16,14 @@ require('./db/connection');
 app.use(require('./router/auth'));
 app.use(express.json());
 
-const PORT = process.env.PORT
+
+app.use(express.static(path.join(__dirname, './server/client/todolist/build')));
+
+app.get('*', function(req,res){
+  res.sendFile(path.join(__dirname, "./server/client/todolist/build/index.html"))
+}) 
+
+
 
 
   app.get('/', (req, res)=>{
@@ -21,6 +31,7 @@ const PORT = process.env.PORT
   
   });
  
+
 
   app.listen(PORT, (req, res) => {
    console.log(`Server is running on http://localhost:${PORT}`);
